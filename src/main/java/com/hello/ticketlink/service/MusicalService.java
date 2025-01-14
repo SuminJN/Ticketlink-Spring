@@ -1,6 +1,7 @@
 package com.hello.ticketlink.service;
 
 import com.hello.ticketlink.domain.Musical;
+import com.hello.ticketlink.dto.MusicalUpdateRequestDTO;
 import com.hello.ticketlink.repository.MusicalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +18,8 @@ public class MusicalService {
     private final MusicalRepository musicalRepository;
 
     @Transactional
-    public Musical save(Musical musical) {
-        return musicalRepository.save(musical);
+    public Long save(Musical musical) {
+        return musicalRepository.save(musical).getId();
     }
 
 //    @Transactional(readOnly = true) // TODO Pageable 기능 추가 예정
@@ -26,20 +27,34 @@ public class MusicalService {
 //        return musicalRepository.findAll(pageable);
 //    }
 
-    @Transactional(readOnly = true)
     public List<Musical> findAllMusicals() {
         return musicalRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Musical findMusicalById(Long musicalId) {
-
         return musicalRepository.findById(musicalId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
     }
 
     @Transactional
-    public void deleteMusical(Musical musical) {
+    public void updateMusical(Long musicalId, MusicalUpdateRequestDTO requestDTO) {
+        Musical musical = musicalRepository.findById(musicalId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
+
+        musical.updateMusical(
+                requestDTO.title(),
+                requestDTO.genre(),
+                requestDTO.description(),
+                requestDTO.startDate(),
+                requestDTO.endDate(),
+                requestDTO.runningTime()
+        );
+    }
+
+    @Transactional
+    public void deleteMusical(Long musicalId) {
+        Musical musical = musicalRepository.findById(musicalId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
 
         if (musical.isDeleted()) {
             throw new EntityNotFoundException("이미 삭제된 뮤지컬입니다.");

@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -24,11 +25,11 @@ public class Musical {
     @Column(name = "title", nullable = false)
     private String title;
 
-    @NotNull
+    @NotBlank
     @Column(name = "genre", nullable = false, length = 20)
     private String genre;
 
-    @NotNull
+    @NotBlank
     @Lob
     @Column(name = "description", nullable = false)
     private String description;
@@ -55,5 +56,28 @@ public class Musical {
 
     public void deleteMusical() {
         this.isDeleted = true;
+    }
+
+    @Builder
+    public Musical(String title, String genre, String description,
+                   LocalDate startDate, LocalDate endDate, int runningTime,
+                   String image) {
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.runningTime = runningTime;
+        this.image = image;
+    }
+
+    public void updateMusical(String title, String genre, String description,
+                              LocalDate startDate, LocalDate endDate, int runningTime) {
+        this.title = title;
+        this.genre = genre;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.runningTime = runningTime;
     }
 }

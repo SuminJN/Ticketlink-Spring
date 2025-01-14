@@ -1,0 +1,47 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Musical 목록</title>
+    <meta charset="utf-8">
+    <link th:href="@{/css/bootstrap.min.css}"
+          href="../css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" style="max-width: 1000px">
+    <div class="py-5 text-center">
+        <h2>뮤지컬 목록</h2>
+    </div>
+
+    <hr class="my-4">
+
+    <div>
+        <table class="table">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>제목</th>
+                <th>장르</th>
+                <th>설명</th>
+                <th>시작일</th>
+                <th>종료일</th>
+                <th>러닝타임</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="musical: ${musicals}">
+                <td><a href="musical.html" th:href="@{/musicals/{itemId}(itemId=${musical.id})}"
+                       th:text="${musical.id}">id</a></td>
+                <td><a href="musical.html" th:href="@{|/musicals/${musical.id}|}"
+                       th:text="${musical.title}">제목</a></td>
+                <td th:text="${musical.genre}">장르</td>
+                <td th:text="${musical.description}">설명</td>
+                <td th:text="${musical.startDate}">시작일</td>
+                <td th:text="${musical.endDate}">종료일</td>
+                <td th:text="${musical.runningTime}">러닝타임</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
