@@ -1,12 +1,66 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Musical 등록 페이지</title>
+    <title>뮤지컬 등록 페이지</title>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-  add page
+<div class="container" style="max-width: 1200px">
+    <div class="py-5 text-center">
+        <h2>뮤지컬 등록 정보</h2>
+    </div>
+
+    <hr class="my-4">
+
+    <div class="row">
+
+        <img class="col-4" src="../static/img/test.jpg" style="border: 3px solid"/>
+        <div class="col-1"></div>
+        <div class="col-7">
+            <form action="musical.html" th:action method="post">
+                <div class="mb-3">
+                    <label for="title">제목</label>
+                    <input type="text" id="title" name="title" class="form-control" placeholder="제목을 입력해주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="description">설명</label>
+                    <input type="text" id="description" name="description" class="form-control"
+                           placeholder="설명을 입력해주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="genre">장르</label>
+                    <input type="text" id="genre" name="genre" class="form-control" placeholder="장르를 입력해주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="startDate">시작일</label>
+                    <input type="text" id="startDate" name="startDate" class="form-control" placeholder="시작일을 입력해주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="endDate">종료일</label>
+                    <input type="text" id="endDate" name="endDate" class="form-control" placeholder="종료일을 입력해주세요">
+                </div>
+                <div class="mb-3">
+                    <label for="runningTime">공연 시간</label>
+                    <input type="text" id="runningTime" name="runningTime" class="form-control"
+                           placeholder="공연 시간을 입력해주세요">
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button class="w-100 btn btn-primary btn-lg" type="submit">공연 등록</button>
+                    </div>
+                    <div class="col">
+                        <button class="w-100 btn btn-secondary btn-lg"
+                                onclick="location.href='list.html'"
+                                th:onclick="|location.href='@{/musicals}'|"
+                                type="button">취소
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 </body>
 </html>

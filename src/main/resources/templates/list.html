@@ -1,15 +1,25 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Musical 목록</title>
+    <title>뮤지컬 목록</title>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../static/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div class="container" style="max-width: 1000px">
     <div class="py-5 text-center">
         <h2>뮤지컬 목록</h2>
+    </div>
+
+    <div class="row">
+        <div class="col">
+            <button class="btn btn-primary float-end"
+                    onclick="location.href='add.html'"
+                    th:onclick="|location.href='@{/musicals/add}'|"
+                    type="button">공연 등록
+            </button>
+        </div>
     </div>
 
     <hr class="my-4">
@@ -28,7 +38,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="musical: ${musicals}">
+            <tr th:each="musical: ${musicals}" th:if="${!musical.isDeleted()}">
                 <td><a href="musical.html" th:href="@{/musicals/{itemId}(itemId=${musical.id})}"
                        th:text="${musical.id}">id</a></td>
                 <td><a href="musical.html" th:href="@{|/musicals/${musical.id}|}"
