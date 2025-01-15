@@ -56,10 +56,11 @@ public class MusicalService {
         Musical musical = musicalRepository.findById(musicalId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
 
-        if (musical.isDeleted()) {
-            throw new EntityNotFoundException("이미 삭제된 뮤지컬입니다.");
-        }
-
+        // 실제로 삭제는 되지 않고 공연 종료 처리
+        if (musical.isDeleted()) throw new EntityNotFoundException("이미 삭제된 뮤지컬입니다.");
         musical.deleteMusical();
+
+//        musicalRepository.delete(musical);
+
     }
 }
