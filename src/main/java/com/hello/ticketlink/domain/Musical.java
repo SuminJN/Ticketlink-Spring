@@ -11,6 +11,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "musical")
@@ -53,6 +55,9 @@ public class Musical {
 
     @Column(name = "is_deleted")
     private boolean isDeleted;
+
+    @OneToMany(mappedBy = "musical")
+    private List<Ticket> tickets = new ArrayList<>();
 
     public void deleteMusical() {
         this.isDeleted = true;
