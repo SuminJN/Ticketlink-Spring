@@ -1,7 +1,7 @@
 package com.hello.ticketlink.controller;
 
 import com.hello.ticketlink.domain.Musical;
-import com.hello.ticketlink.dto.MusicalUpdateRequestDTO;
+import com.hello.ticketlink.domain.dto.MusicalUpdateRequestDTO;
 import com.hello.ticketlink.service.MusicalService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

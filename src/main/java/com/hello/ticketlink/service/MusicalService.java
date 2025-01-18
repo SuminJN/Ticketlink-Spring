@@ -1,7 +1,7 @@
 package com.hello.ticketlink.service;
 
 import com.hello.ticketlink.domain.Musical;
-import com.hello.ticketlink.dto.MusicalUpdateRequestDTO;
+import com.hello.ticketlink.domain.dto.MusicalUpdateRequestDTO;
 import com.hello.ticketlink.repository.MusicalRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;

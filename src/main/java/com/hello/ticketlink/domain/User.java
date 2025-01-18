@@ -21,6 +21,10 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank
+    @Column(unique = true, nullable = false)
+    private String username;
+
     @Email
     @Column(name = "email", nullable = false, unique = true)
     private String email;
@@ -33,7 +37,8 @@ public class User {
     private List<Ticket> tickets = new ArrayList<>();
 
     @Builder
-    public User(String email, String password) {
+    public User(String username, String email, String password) {
+        this.username = username;
         this.email = email;
         this.password = password;
     }

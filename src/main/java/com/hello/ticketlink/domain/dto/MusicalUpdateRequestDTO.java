@@ -1,4 +1,4 @@
-package com.hello.ticketlink.dto;
+package com.hello.ticketlink.domain.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
