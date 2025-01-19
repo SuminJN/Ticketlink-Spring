@@ -3,14 +3,17 @@ package com.hello.ticketlink.controller;
 import com.hello.ticketlink.domain.form.UserCreateForm;
 import com.hello.ticketlink.service.UserService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class UserController {
@@ -28,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/signup")
-    public String signup(@Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
+    public String signup(@ModelAttribute @Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "signup_form";
         }
@@ -41,6 +44,6 @@ public class UserController {
         userService.create(userCreateForm.getUsername(),
                 userCreateForm.getEmail(), userCreateForm.getPassword1());
 
-        return "redirect:/musicals";
+        return "redirect:/login";
     }
 }

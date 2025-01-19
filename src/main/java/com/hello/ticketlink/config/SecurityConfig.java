@@ -20,17 +20,15 @@ public class SecurityConfig {
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(AbstractHttpConfigurer::disable)
-                .authorizeHttpRequests((authorize) -> authorize
+                .authorizeHttpRequests((request) -> request
                         .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/css/**")).permitAll()
-                        .requestMatchers(new AntPathRequestMatcher("/js/**")).permitAll()
+                        .requestMatchers("/css/**", "/js/**").permitAll()
                         .anyRequest().authenticated())
-//                .authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-//                        .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-                .formLogin((formLogin) -> formLogin
+                .formLogin((login) -> login
                         .loginPage("/login")
-                        .defaultSuccessUrl("/musicals"))
+                        .successForwardUrl("/musicals") // 로그인이 성공한 후 보내는 Url
+                        .defaultSuccessUrl("/musicals")) // 로그인 요청 전 페이지로 보내기
                 .logout((logout) -> logout
                         .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                         .logoutSuccessUrl("/login")
