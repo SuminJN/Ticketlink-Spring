@@ -4,9 +4,10 @@ import com.hello.ticketlink.dto.MusicalCreateRequestDto;
 import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
 import com.hello.ticketlink.musical.domain.Musical;
 import com.hello.ticketlink.musical.repository.MusicalRepository;
-import com.hello.ticketlink.util.FileUtil;
+import com.hello.ticketlink.poster.Poster;
+import com.hello.ticketlink.poster.PosterRepository;
+import com.hello.ticketlink.poster.PosterService;
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,9 +21,14 @@ import java.util.List;
 public class MusicalService {
 
     private final MusicalRepository musicalRepository;
+    private final PosterService posterService;
+
 
     @Transactional
-    public Long save(MusicalCreateRequestDto requestDto, MultipartFile image, HttpServletRequest request) {
+    public Long save(MusicalCreateRequestDto requestDto, MultipartFile image) {
+
+        Poster poster = posterService.uploadThumbnail(image);
+
         Musical musical = Musical.builder()
                 .title(requestDto.title())
                 .genre(requestDto.genre())
@@ -30,7 +36,7 @@ public class MusicalService {
                 .startDate(requestDto.startDate())
                 .endDate(requestDto.endDate())
                 .runningTime(requestDto.runningTime())
-                .image(FileUtil.uploadFile(image, "", request))
+                .poster(poster)
                 .build();
 
         return musicalRepository.save(musical).getId();
