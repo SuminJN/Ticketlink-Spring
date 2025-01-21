@@ -22,22 +22,33 @@
       <thead>
       <tr>
         <th>뮤지컬 제목</th>
-        <th>자리 번호</th>
-        <th>러닝타임</th>
         <th>공연 일자</th>
+        <th>좌석 번호</th>
+        <th>러닝타임</th>
+        <th></th>
       </tr>
       </thead>
       <tbody>
       <tr th:each="ticket: ${tickets}">
         <td><a href="musical_detail.html" th:href="@{|/musicals/${ticket.musical.id}|}"
                th:text="${ticket.musical.title}">뮤지컬 제목</a></td>
-        <td th:text="${ticket.seatNumber}">자리 번호</td>
-        <td th:text="${ticket.musical.runningTime}">러닝타임</td>
         <td th:text="${ticket.date}">공연 일자</td>
+        <td th:text="${ticket.seatNumber}">좌석 번호</td>
+        <td th:text="${ticket.musical.runningTime}">러닝타임</td>
+        <td><button class="btn-sm btn-danger"
+                    th:onclick="confirmDelete([[${ticket.id}]])" type="button">예약취소</button></td>
       </tr>
       </tbody>
     </table>
   </div>
 </div>
+<script>
+  function confirmDelete(id) {
+    console.log(id);
+    if (confirm('정말 삭제하시겠습니까?')) {
+      location.href = './ticket/delete/' + id;
+    }
+  }
+</script>
 </body>
 </html>

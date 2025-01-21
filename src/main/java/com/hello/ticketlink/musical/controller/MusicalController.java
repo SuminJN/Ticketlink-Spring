@@ -42,7 +42,7 @@ public class MusicalController {
 
     @GetMapping("/add") // 뮤지컬 추가 페이지
     public String addForm() {
-        return "add_musical";
+        return "musical_add";
     }
 
     @PostMapping("/add") // 뮤지컬 추가 요청
@@ -60,7 +60,7 @@ public class MusicalController {
     public String editForm(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
         model.addAttribute("musical", musical);
-        return "edit_musical";
+        return "musical_edit";
     }
 
     @PostMapping("/{musicalId}/edit") // 뮤지컬 수정 요청

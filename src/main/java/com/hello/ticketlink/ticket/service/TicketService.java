@@ -15,7 +15,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
+@Transactional(readOnly = true)
 public class TicketService {
 
     private final TicketRepository ticketRepository;
@@ -32,8 +32,12 @@ public class TicketService {
         ticketRepository.save(ticket);
     }
 
-    @Transactional(readOnly = true)
     public List<Ticket> findByUserId(Long userId) {
         return ticketRepository.findByUser_Id(userId);
+    }
+
+    @Transactional
+    public void delete(Long ticketId) {
+        ticketRepository.deleteById(ticketId);
     }
 }

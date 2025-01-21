@@ -25,7 +25,7 @@ public class TicketController {
     private final MusicalService musicalService;
     private final UserService userService;
 
-    @PostMapping("/musicals/{musicalId}/ticket")
+    @PostMapping("/musicals/{musicalId}/ticket") // 티켓 생성
     public String ticketing(@PathVariable Long musicalId,
                             @ModelAttribute TicketCreateRequestDto requestDto,
                             Principal principal) {
@@ -37,7 +37,14 @@ public class TicketController {
         return "redirect:/reservations";
     }
 
-    @GetMapping("/reservations")
+    @GetMapping("/ticket/delete/{ticketId}")
+    public String deleteTicket(@PathVariable Long ticketId) {
+        ticketService.delete(ticketId);
+
+        return "redirect:/reservations";
+    }
+
+    @GetMapping("/reservations") // 예약 메뉴 보여주기
     public String reservations(Model model, Principal principal) {
         User user = userService.getUser(principal.getName());
         List<Ticket> tickets = ticketService.findByUserId(user.getId());
