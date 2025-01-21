@@ -75,7 +75,7 @@
     </div>
 
     <!--    예약 fragment -->
-    <form th:action="@{|/musicals/${musicalId}/ticket|}" method="post">
+    <form th:action="@{|/musicals/${musicalId}/ticket|}" method="post" onsubmit="return validateForm()">
         <div class="row border rounded" style="height: 300px;">
 
             <!--            날짜 선택-->
@@ -159,6 +159,17 @@
 
         const seatNumber = document.getElementById('seatNumber');
         seatNumber.value = id;
+    }
+
+    function validateForm() {
+        var dateField = document.getElementById("date").value;
+        var textField = document.getElementById("seatNumber").value;
+
+        if (dateField === "" || textField === "") {
+            alert("날짜와 좌석을 모두 선택해주세요.");
+            return false;
+        }
+        return true;
     }
 </script>
 </html>
