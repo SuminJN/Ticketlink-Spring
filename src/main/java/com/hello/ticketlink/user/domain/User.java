@@ -1,5 +1,7 @@
-package com.hello.ticketlink.domain;
+package com.hello.ticketlink.user.domain;
 
+import com.hello.ticketlink.dto.UserInfoResponseDto;
+import com.hello.ticketlink.ticket.domain.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -41,5 +43,12 @@ public class User {
         this.username = username;
         this.email = email;
         this.password = password;
+    }
+
+    public UserInfoResponseDto userInfoResponse() {
+        return UserInfoResponseDto.builder()
+                .username(this.username)
+                .email(this.email)
+                .build();
     }
 }

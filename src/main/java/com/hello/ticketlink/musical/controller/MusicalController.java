@@ -1,16 +1,21 @@
-package com.hello.ticketlink.controller;
+package com.hello.ticketlink.musical.controller;
 
-import com.hello.ticketlink.domain.Musical;
-import com.hello.ticketlink.domain.dto.MusicalUpdateRequestDTO;
-import com.hello.ticketlink.service.MusicalService;
+import com.hello.ticketlink.dto.MusicalCreateRequestDto;
+import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
+import com.hello.ticketlink.musical.domain.Musical;
+import com.hello.ticketlink.musical.service.MusicalService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequiredArgsConstructor
 @RequestMapping("/musicals")
@@ -28,6 +33,8 @@ public class MusicalController {
     @GetMapping("/{musicalId}") // 뮤지컬 상세 페이지
     public String getOneMusical(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
+        int seatCount = musical.availableTicket().size();
+        model.addAttribute("seatCount", seatCount);
         model.addAttribute("musical", musical);
         return "musical";
     }
@@ -38,8 +45,11 @@ public class MusicalController {
     }
 
     @PostMapping("/add") // 뮤지컬 추가 요청
-    public String addMusical(@ModelAttribute Musical musical, RedirectAttributes redirectAttributes) {
-        Long musicalId = musicalService.save(musical);
+    public String addMusical(MusicalCreateRequestDto requestDto,
+                             @RequestParam MultipartFile image,
+                             HttpServletRequest request, RedirectAttributes redirectAttributes) {
+        Long musicalId = musicalService.save(requestDto, image, request);
+
         redirectAttributes.addAttribute("musicalId", musicalId);
         return "redirect:/musicals/{musicalId}";
     }
@@ -52,7 +62,7 @@ public class MusicalController {
     }
 
     @PostMapping("/{musicalId}/edit") // 뮤지컬 수정 요청
-    public String editMusical(@PathVariable Long musicalId, @ModelAttribute MusicalUpdateRequestDTO requestDTO) {
+    public String editMusical(@PathVariable Long musicalId, @ModelAttribute MusicalUpdateRequestDto requestDTO) {
         musicalService.updateMusical(musicalId, requestDTO);
         return "redirect:/musicals/{musicalId}";
     }

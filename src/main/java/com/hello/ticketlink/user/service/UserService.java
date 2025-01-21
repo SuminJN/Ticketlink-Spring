@@ -1,9 +1,8 @@
-package com.hello.ticketlink.service;
+package com.hello.ticketlink.user.service;
 
-import com.hello.ticketlink.domain.User;
-import com.hello.ticketlink.repository.UserRepository;
+import com.hello.ticketlink.user.repository.UserRepository;
+import com.hello.ticketlink.user.domain.User;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -24,5 +23,9 @@ public class UserService {
         this.userRepository.save(user);
 
         return user;
+    }
+
+    public User getUser(String username) {
+        return userRepository.findByusername(username).orElseThrow();
     }
 }

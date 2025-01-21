@@ -1,4 +1,4 @@
-package com.hello.ticketlink.domain.form;
+package com.hello.ticketlink.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
@@ -9,7 +9,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UserCreateForm {
+public class UserCreateRequestDto {
     @Size(min = 3, max = 25, message = "ID는 3~25글자로 입력하세요.")
     @NotEmpty(message = "ID는 필수항목입니다.")
     private String username;

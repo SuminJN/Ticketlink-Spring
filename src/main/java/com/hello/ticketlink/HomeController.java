@@ -1,4 +1,4 @@
-package com.hello.ticketlink.controller;
+package com.hello.ticketlink;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

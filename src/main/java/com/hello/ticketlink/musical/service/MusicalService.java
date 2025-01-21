@@ -1,12 +1,16 @@
-package com.hello.ticketlink.service;
+package com.hello.ticketlink.musical.service;
 
-import com.hello.ticketlink.domain.Musical;
-import com.hello.ticketlink.domain.dto.MusicalUpdateRequestDTO;
-import com.hello.ticketlink.repository.MusicalRepository;
+import com.hello.ticketlink.dto.MusicalCreateRequestDto;
+import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
+import com.hello.ticketlink.musical.domain.Musical;
+import com.hello.ticketlink.musical.repository.MusicalRepository;
+import com.hello.ticketlink.util.FileUtil;
 import jakarta.persistence.EntityNotFoundException;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -18,7 +22,17 @@ public class MusicalService {
     private final MusicalRepository musicalRepository;
 
     @Transactional
-    public Long save(Musical musical) {
+    public Long save(MusicalCreateRequestDto requestDto, MultipartFile image, HttpServletRequest request) {
+        Musical musical = Musical.builder()
+                .title(requestDto.title())
+                .genre(requestDto.genre())
+                .description(requestDto.description())
+                .startDate(requestDto.startDate())
+                .endDate(requestDto.endDate())
+                .runningTime(requestDto.runningTime())
+                .image(FileUtil.uploadFile(image, "", request))
+                .build();
+
         return musicalRepository.save(musical).getId();
     }
 
@@ -37,7 +51,7 @@ public class MusicalService {
     }
 
     @Transactional
-    public void updateMusical(Long musicalId, MusicalUpdateRequestDTO requestDTO) {
+    public void updateMusical(Long musicalId, MusicalUpdateRequestDto requestDTO) {
         Musical musical = musicalRepository.findById(musicalId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
 

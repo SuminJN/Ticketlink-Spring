@@ -1,5 +1,6 @@
-package com.hello.ticketlink.domain.dto;
+package com.hello.ticketlink.dto;
 
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
@@ -9,13 +10,12 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.time.LocalDate;
 
 @Builder
-public record MusicalUpdateRequestDTO(
+public record MusicalCreateRequestDto(
         @NotBlank String title,
         @NotBlank String genre,
-        @NotBlank String description,
+        @NotBlank @Lob String description,
         @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate startDate,
         @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate endDate,
         @NotNull @Positive int runningTime
 ) {
-
 }

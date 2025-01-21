@@ -1,6 +1,6 @@
-package com.hello.ticketlink.repository;
+package com.hello.ticketlink.musical.repository;
 
-import com.hello.ticketlink.domain.Musical;
+import com.hello.ticketlink.musical.domain.Musical;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface MusicalRepository extends JpaRepository<Musical, Long> {

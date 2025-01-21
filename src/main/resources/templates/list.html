@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="https://www.thymeleaf.org/extras/spring-security">
 <head>
-    <title>뮤지컬 목록</title>
+    <title>공연 목록</title>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../static/css/bootstrap.min.css" rel="stylesheet">
@@ -12,13 +12,14 @@
 
 <div class="container" style="max-width: 1000px">
     <div class="py-5 text-center">
-        <h2>뮤지컬 목록</h2>
+        <h2>공연 목록</h2>
     </div>
 
     <div class="row">
         <div class="col">
             <button class="btn btn-primary float-end"
                     onclick="location.href='add.html'"
+                    sec:authorize="hasRole('ADMIN')"
                     th:onclick="|location.href='@{/musicals/add}'|"
                     type="button">공연 등록
             </button>

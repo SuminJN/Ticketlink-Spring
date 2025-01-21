@@ -1,5 +1,6 @@
-package com.hello.ticketlink.domain;
+package com.hello.ticketlink.musical.domain;
 
+import com.hello.ticketlink.ticket.domain.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,11 +9,13 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @Entity
 @Table(name = "musical")
@@ -84,5 +87,17 @@ public class Musical {
         this.startDate = startDate;
         this.endDate = endDate;
         this.runningTime = runningTime;
+    }
+
+    public List<Integer> availableTicket() {
+        Set<Integer> bookedTicketNumbers = tickets.stream()
+                .map(Ticket::getSeatNumber)
+                .collect(Collectors.toSet());
+
+        // 1부터 30까지의 범위에서 예약되지 않은 티켓 번호만 반환
+        return IntStream.rangeClosed(1, 30)
+                .filter(ticket -> !bookedTicketNumbers.contains(ticket))
+                .boxed()
+                .toList();
     }
 }

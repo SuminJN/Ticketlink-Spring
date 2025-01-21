@@ -1,17 +1,20 @@
-package com.hello.ticketlink.controller;
+package com.hello.ticketlink.user.controller;
 
-import com.hello.ticketlink.domain.form.UserCreateForm;
-import com.hello.ticketlink.service.UserService;
+import com.hello.ticketlink.dto.UserCreateRequestDto;
+import com.hello.ticketlink.user.domain.User;
+import com.hello.ticketlink.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import lombok.RequiredArgsConstructor;
+
+import java.security.Principal;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -26,24 +29,32 @@ public class UserController {
     }
 
     @GetMapping("/signup")
-    public String signup(UserCreateForm userCreateForm) {
+    public String signup(UserCreateRequestDto userCreateRequestDto) {
         return "signup_form";
     }
 
     @PostMapping("/signup")
-    public String signup(@ModelAttribute @Valid UserCreateForm userCreateForm, BindingResult bindingResult) {
+    public String signup(@ModelAttribute @Valid UserCreateRequestDto userCreateRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             return "signup_form";
         }
 
-        if (!userCreateForm.getPassword1().equals(userCreateForm.getPassword2())) {
+        if (!userCreateRequestDto.getPassword1().equals(userCreateRequestDto.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
             return "signup_form";
         }
 
-        userService.create(userCreateForm.getUsername(),
-                userCreateForm.getEmail(), userCreateForm.getPassword1());
+        userService.create(userCreateRequestDto.getUsername(),
+                userCreateRequestDto.getEmail(), userCreateRequestDto.getPassword1());
 
         return "redirect:/login";
+    }
+
+    @GetMapping("/user")
+    public String userInfo(Model model, Principal principal) {
+        User user = userService.getUser(principal.getName());
+        model.addAttribute("user", user.userInfoResponse());
+
+        return "user";
     }
 }

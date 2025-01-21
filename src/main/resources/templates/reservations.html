@@ -1,0 +1,43 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>내 예약 목록</title>
+  <meta charset="utf-8">
+  <link th:href="@{/css/bootstrap.min.css}"
+        href="../static/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<!-- 네비게이션바 -->
+<nav th:replace="~{navbar :: navbarFragment}"></nav>
+
+<div class="container" style="max-width: 1000px">
+  <div class="py-5 text-center">
+    <h2>내 예약 목록</h2>
+  </div>
+
+  <hr class="my-4">
+
+  <div>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>뮤지컬 제목</th>
+        <th>자리 번호</th>
+        <th>러닝타임</th>
+        <th>공연 일자</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="ticket: ${tickets}">
+        <td><a href="musical.html" th:href="@{|/musicals/${ticket.musical.id}|}"
+               th:text="${ticket.musical.title}">뮤지컬 제목</a></td>
+        <td th:text="${ticket.seatNumber}">자리 번호</td>
+        <td th:text="${ticket.musical.runningTime}">러닝타임</td>
+        <td th:text="${ticket.date}">공연 일자</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+</body>
+</html>

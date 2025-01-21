@@ -1,7 +1,7 @@
 
-package com.hello.ticketlink.repository;
+package com.hello.ticketlink.user.repository;
 
-import com.hello.ticketlink.domain.User;
+import com.hello.ticketlink.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
