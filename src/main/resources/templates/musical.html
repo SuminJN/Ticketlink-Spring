@@ -37,7 +37,8 @@
     <hr class="mb-4 mt-2">
 
     <div class="row my-4">
-        <img class="col-4" src="../static/images/test.jpg" th:src="@{'/uploadPath' + ${musical.poster.imagePath}}" style="border: 3px solid"/>
+        <img class="col-4" src="../static/images/test.jpg" th:src="@{'/uploadPath' + ${musical.poster.imagePath}}"
+             style="border: 3px solid"/>
         <div class="col-1"></div>
         <div class="col-7">
             <div class="mb-3">
@@ -76,27 +77,56 @@
     <!--    예약 fragment -->
     <form th:action="@{|/musicals/${musicalId}/ticket|}" method="post">
         <div class="row border rounded" style="height: 300px;">
+
+            <!--            날짜 선택-->
             <div class="col-5 border-end">
                 <div class="m-3">
-                    <label for="date">공연 날짜</label>
-                    <input type="date" id="date" name="date" class="form-control" value="date">
+                    <div class="my-3">
+                        <p>선택 가능 날짜:</p>
+                        <div class="p-3 border rounded">
+                            <span th:text="${musical.startDate}">2025-01-01</span>
+                            <span>~</span>
+                            <span th:text="${musical.endDate}">2025-01-01</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="my-3" for="date">공연 날짜</label>
+                        <input type="date" id="date" name="date" class="form-control" value="date"
+                                th:min="${musical.startDate}" th:max="${musical.endDate}">
+                    </div>
                 </div>
-
             </div>
 
+            <!-- 좌석 선택-->
             <div class="col-4">
                 <div class="m-3">
-                    <label for="seatNumber">자리 번호(1 ~ 30)</label>
-                    <input type="number" id="seatNumber" name="seatNumber" class="form-control" value="seatNumber">
+                    <div class="my-3">
+                        <label>남은 좌석</label>
+                    </div>
+                    <div class="border p-3" style="width:100%; height:135px; overflow:auto">
+                        <table for="seatNumber">
+                            <tr th:each="seat : ${seats}">
+                                <td th:text="|${seat} 번 좌석|" th:value="${seat}">1번 좌석</td>
+                                <td>
+                                    <button type="button" onclick="getSeatNumber(this)">선택</button>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="my-3">
+                        <label for="seatNumber">선택한 좌석 번호:</label>
+                        <input type="text" id="seatNumber" name="seatNumber" class="form-control" readonly>
+                    </div>
                 </div>
             </div>
 
+            <!--            남은 좌석 표시-->
             <div class="col-3 border-start" style="background: ghostwhite">
                 <p class="fs-5 m-3">남은 좌석 개수</p>
                 <ul class="seat_list">
                     <li class="my-1">
                         <span>OP석</span>
-                        <span class="float-end mx-5" th:text="${seatCount}">100</span>
+                        <span class="float-end mx-5" th:text="${#lists.size(seats)}">100</span>
                     </li>
                     <li class="my-1">
                         <span>R석</span>
@@ -125,4 +155,14 @@
 <!--footer-->
 <footer style="height: 300px;"></footer>
 </body>
+<script>
+    // 선택된 좌석 번호 가져오는 함수
+    function getSeatNumber(button) {
+        const row = button.closest('tr');
+        const id = row.cells[0].getAttribute('value');
+
+        const seatNumber = document.getElementById('seatNumber');
+        seatNumber.value = id;
+    }
+</script>
 </html>

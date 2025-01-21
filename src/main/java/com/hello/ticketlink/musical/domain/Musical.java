@@ -95,7 +95,7 @@ public class Musical {
         this.poster = poster;
     }
 
-    public List<Integer> availableTicket() {
+    public int[] availableTicket() {
         Set<Integer> bookedTicketNumbers = tickets.stream()
                 .map(Ticket::getSeatNumber)
                 .collect(Collectors.toSet());
@@ -103,7 +103,18 @@ public class Musical {
         // 1부터 30까지의 범위에서 예약되지 않은 티켓 번호만 반환
         return IntStream.rangeClosed(1, 30)
                 .filter(ticket -> !bookedTicketNumbers.contains(ticket))
-                .boxed()
-                .toList();
+                .toArray();
     }
+
+//    public List<Integer> availableTicket() {
+//        Set<Integer> bookedTicketNumbers = tickets.stream()
+//                .map(Ticket::getSeatNumber)
+//                .collect(Collectors.toSet());
+//
+//        // 1부터 30까지의 범위에서 예약되지 않은 티켓 번호만 반환
+//        return IntStream.rangeClosed(1, 30)
+//                .filter(ticket -> !bookedTicketNumbers.contains(ticket))
+//                .boxed()
+//                .toList();
+//    }
 }

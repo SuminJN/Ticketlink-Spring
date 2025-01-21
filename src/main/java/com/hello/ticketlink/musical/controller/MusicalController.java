@@ -35,8 +35,10 @@ public class MusicalController {
     @GetMapping("/{musicalId}") // 뮤지컬 상세 페이지
     public String getOneMusical(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
-        int seatCount = musical.availableTicket().size();
-        model.addAttribute("seatCount", seatCount);
+//        int seatCount = musical.availableTicket().length;
+//        model.addAttribute("seatCount", seatCount);
+        int[] seats = musical.availableTicket();
+        model.addAttribute("seats", seats);
         model.addAttribute("musical", musical);
         return "musical";
     }

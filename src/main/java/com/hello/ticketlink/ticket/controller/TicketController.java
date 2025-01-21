@@ -34,7 +34,7 @@ public class TicketController {
 
         ticketService.create(user, musical, requestDto);
 
-        return "redirect:/reservations"; // TODO 예매 조회 페이지로 이동시키기
+        return "redirect:/reservations";
     }
 
     @GetMapping("/reservations")
