@@ -4,6 +4,7 @@ import com.hello.ticketlink.dto.MusicalCreateRequestDto;
 import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
 import com.hello.ticketlink.musical.domain.Musical;
 import com.hello.ticketlink.musical.service.MusicalService;
+import com.hello.ticketlink.poster.PosterService;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,6 +23,7 @@ import java.util.List;
 public class MusicalController {
 
     private final MusicalService musicalService;
+    private final PosterService posterService;
 
     @GetMapping // 뮤지컬 목록 페이지
     public String getAllMusicals(Model model) {
@@ -47,8 +49,9 @@ public class MusicalController {
     @PostMapping("/add") // 뮤지컬 추가 요청
     public String addMusical(MusicalCreateRequestDto requestDto,
                              @RequestParam MultipartFile image,
-                             HttpServletRequest request, RedirectAttributes redirectAttributes) {
-        Long musicalId = musicalService.save(requestDto, image, request);
+                             RedirectAttributes redirectAttributes) {
+
+        Long musicalId = musicalService.save(requestDto, image);
 
         redirectAttributes.addAttribute("musicalId", musicalId);
         return "redirect:/musicals/{musicalId}";

@@ -23,7 +23,7 @@ public class SecurityConfig {
                 .authorizeHttpRequests((request) -> request
                         .requestMatchers(new AntPathRequestMatcher("/signup")).permitAll()
                         .requestMatchers(new AntPathRequestMatcher("/login")).permitAll()
-                        .requestMatchers("/css/**", "/js/**", "/images/**").permitAll()
+                        .requestMatchers("/css/**", "/js/**", "/images/**", "/upload/**").permitAll()
                         .requestMatchers("musicals/add",
                                 "musicals/{musicalId}/edit",
                                 "musicals/{musicalId}/delete").hasRole("ADMIN")

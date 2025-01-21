@@ -37,7 +37,7 @@
     <hr class="mb-4 mt-2">
 
     <div class="row my-4">
-        <img class="col-4" src="../static/images/test.jpg" th:src="@{'/images/' + ${musical.image}}" style="border: 3px solid"/>
+        <img class="col-4" src="../static/images/test.jpg" th:src="@{'/uploadPath' + ${musical.poster.imagePath}}" style="border: 3px solid"/>
         <div class="col-1"></div>
         <div class="col-7">
             <div class="mb-3">

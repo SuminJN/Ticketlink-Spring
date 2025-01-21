@@ -1,5 +1,6 @@
 package com.hello.ticketlink.musical.domain;
 
+import com.hello.ticketlink.poster.Poster;
 import com.hello.ticketlink.ticket.domain.Ticket;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -53,13 +54,14 @@ public class Musical {
     @Column(name = "running_time", nullable = false)
     private int runningTime;
 
-    @Column(name = "image")
-    private String image;
-
     @Column(name = "is_deleted")
     private boolean isDeleted;
 
-    @OneToMany(mappedBy = "musical")
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name = "poster_id", unique = true)
+    private Poster poster;
+
+    @OneToMany(mappedBy = "musical", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
 
     public void deleteMusical() {
@@ -69,14 +71,14 @@ public class Musical {
     @Builder
     public Musical(String title, String genre, String description,
                    LocalDate startDate, LocalDate endDate, int runningTime,
-                   String image) {
+                   Poster poster) {
         this.title = title;
         this.genre = genre;
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
         this.runningTime = runningTime;
-        this.image = image;
+        this.poster = poster;
     }
 
     public void updateMusical(String title, String genre, String description,
