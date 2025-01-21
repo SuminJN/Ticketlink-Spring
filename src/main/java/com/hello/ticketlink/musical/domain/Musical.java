@@ -54,19 +54,12 @@ public class Musical {
     @Column(name = "running_time", nullable = false)
     private int runningTime;
 
-    @Column(name = "is_deleted")
-    private boolean isDeleted;
-
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinColumn(name = "poster_id", unique = true)
     private Poster poster;
 
     @OneToMany(mappedBy = "musical", cascade = CascadeType.ALL)
     private List<Ticket> tickets = new ArrayList<>();
-
-    public void deleteMusical() {
-        this.isDeleted = true;
-    }
 
     @Builder
     public Musical(String title, String genre, String description,
@@ -105,16 +98,4 @@ public class Musical {
                 .filter(ticket -> !bookedTicketNumbers.contains(ticket))
                 .toArray();
     }
-
-//    public List<Integer> availableTicket() {
-//        Set<Integer> bookedTicketNumbers = tickets.stream()
-//                .map(Ticket::getSeatNumber)
-//                .collect(Collectors.toSet());
-//
-//        // 1부터 30까지의 범위에서 예약되지 않은 티켓 번호만 반환
-//        return IntStream.rangeClosed(1, 30)
-//                .filter(ticket -> !bookedTicketNumbers.contains(ticket))
-//                .boxed()
-//                .toList();
-//    }
 }

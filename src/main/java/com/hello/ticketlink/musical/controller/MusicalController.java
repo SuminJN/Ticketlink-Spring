@@ -25,7 +25,7 @@ public class MusicalController {
     private final MusicalService musicalService;
 
     @GetMapping // 뮤지컬 목록 페이지
-    public String getAllMusicals(@PageableDefault(page = 10) Pageable pageable, Model model) {
+    public String getAllMusicals(@PageableDefault(size = 5, sort = "id") Pageable pageable, Model model) {
         Page<Musical> musicals = musicalService.findAllMusicals(pageable);
         model.addAttribute("musicals", musicals);
         return "list";
@@ -76,7 +76,7 @@ public class MusicalController {
     @GetMapping("/{musicalId}/delete") // 뮤지컬 삭제 요청
     public String deleteMusical(@PathVariable Long musicalId) {
         musicalService.deleteMusical(musicalId);
-        return "redirect:/musicals";
+        return "redirect:/musicals?page=0";
     }
 }
 
