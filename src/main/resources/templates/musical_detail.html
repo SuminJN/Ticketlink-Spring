@@ -19,7 +19,7 @@
         <div class="col-10"></div>
         <div class="col-1 p-0">
             <button class="btn btn-primary"
-                    onclick="location.href='edit.html'"
+                    onclick="location.href='musical_edit.html'"
                     sec:authorize="hasRole('ADMIN')"
                     th:onclick="|location.href='@{/musicals/{musicalId}/edit(musicalId=${musical.id})}'|"
                     type="button">공연 수정
@@ -27,7 +27,7 @@
         </div>
         <div class="col-1 p-0">
             <button class="btn btn-secondary"
-                    onclick="location.href='list.html'"
+                    onclick="location.href='musical_list.html'"
                     th:onclick="|location.href='@{/musicals?page=0}'|"
                     type="button">공연 목록
             </button>
@@ -125,19 +125,15 @@
                 <p class="fs-5 m-3">남은 좌석 개수</p>
                 <ul class="seat_list">
                     <li class="my-1">
-                        <span>OP석</span>
+                        <span>A석</span>
                         <span class="float-end mx-5" th:text="${#lists.size(seats)}">100</span>
                     </li>
                     <li class="my-1">
-                        <span>R석</span>
+                        <span>B석</span>
                         <span class="float-end mx-5">매진</span>
                     </li>
                     <li class="my-1">
-                        <span>S석</span>
-                        <span class="float-end mx-5">매진</span>
-                    </li>
-                    <li class="my-1">
-                        <span>A석</span>
+                        <span>C석</span>
                         <span class="float-end mx-5">매진</span>
                     </li>
                 </ul>
@@ -153,7 +149,7 @@
 </div>
 
 <!--footer-->
-<footer style="height: 300px;"></footer>
+<footer style="height: 100px;"></footer>
 </body>
 <script>
     // 선택된 좌석 번호 가져오는 함수
