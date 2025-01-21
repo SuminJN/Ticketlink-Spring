@@ -4,17 +4,17 @@ import com.hello.ticketlink.dto.MusicalCreateRequestDto;
 import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
 import com.hello.ticketlink.musical.domain.Musical;
 import com.hello.ticketlink.musical.service.MusicalService;
-import com.hello.ticketlink.poster.PosterService;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.List;
 
 @Slf4j
 @Controller
@@ -23,11 +23,10 @@ import java.util.List;
 public class MusicalController {
 
     private final MusicalService musicalService;
-    private final PosterService posterService;
 
     @GetMapping // 뮤지컬 목록 페이지
-    public String getAllMusicals(Model model) {
-        List<Musical> musicals = musicalService.findAllMusicals();
+    public String getAllMusicals(@PageableDefault(page = 10) Pageable pageable, Model model) {
+        Page<Musical> musicals = musicalService.findAllMusicals(pageable);
         model.addAttribute("musicals", musicals);
         return "list";
     }
@@ -35,8 +34,6 @@ public class MusicalController {
     @GetMapping("/{musicalId}") // 뮤지컬 상세 페이지
     public String getOneMusical(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
-//        int seatCount = musical.availableTicket().length;
-//        model.addAttribute("seatCount", seatCount);
         int[] seats = musical.availableTicket();
         model.addAttribute("seats", seats);
         model.addAttribute("musical", musical);
@@ -71,7 +68,6 @@ public class MusicalController {
                               @ModelAttribute MusicalUpdateRequestDto requestDTO,
                               @RequestParam MultipartFile image) {
         musicalService.updateMusical(musicalId, requestDTO);
-
         if(!image.isEmpty()) musicalService.updatePoster(musicalId, image);
 
         return "redirect:/musicals/{musicalId}";

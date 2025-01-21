@@ -5,6 +5,36 @@
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
           href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .pagination {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            justify-content: center;
+        }
+
+        .pagination li {
+            margin: 0 5px;
+        }
+
+        .pagination a {
+            text-decoration: none;
+            padding: 5px 10px;
+            color: #007bff;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .pagination a.active {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .pagination a.disabled {
+            color: #ccc;
+            pointer-events: none;
+        }
+    </style>
 </head>
 <body>
 <!-- 네비게이션바 -->
@@ -55,6 +85,28 @@
             </tr>
             </tbody>
         </table>
+
+        <!--        페이징 버튼-->
+        <ul class="pagination">
+            <li>
+                <a th:href="@{|/musicals?page=0|}">First</a>
+            </li>
+            <li>
+                <a th:href="@{|/musicals?page=${musicals.number - 1}|}"
+                   th:classappend="${musicals.first} ? 'disabled'">&laquo;</a>
+            </li>
+            <li th:each="i : ${#numbers.sequence(0, musicals.totalPages - 1)}">
+                <a th:href="@{|/musicals?page=${i}|}"
+                   th:classappend="${musicals.number == i} ? 'active'">[[${i + 1}]]</a>
+            </li>
+            <li>
+                <a th:href="@{|/musicals?page=${musicals.number + 1}|}"
+                   th:classappend="${musicals.last} ? 'disabled'">&raquo;</a>
+            </li>
+            <li>
+                <a th:href="@{|/musicals?page=${musicals.totalPages - 1}|}">Last</a>
+            </li>
+        </ul>
     </div>
 </div>
 </body>

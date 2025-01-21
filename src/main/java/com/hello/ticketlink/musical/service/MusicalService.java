@@ -5,10 +5,11 @@ import com.hello.ticketlink.dto.MusicalUpdateRequestDto;
 import com.hello.ticketlink.musical.domain.Musical;
 import com.hello.ticketlink.musical.repository.MusicalRepository;
 import com.hello.ticketlink.poster.Poster;
-import com.hello.ticketlink.poster.PosterRepository;
 import com.hello.ticketlink.poster.PosterService;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -42,13 +43,8 @@ public class MusicalService {
         return musicalRepository.save(musical).getId();
     }
 
-//    @Transactional(readOnly = true) // TODO Pageable 기능 추가 예정
-//    public Page<Musical> findAllMusicals(Pageable pageable) {
-//        return musicalRepository.findAll(pageable);
-//    }
-
-    public List<Musical> findAllMusicals() {
-        return musicalRepository.findAll();
+    public Page<Musical> findAllMusicals(Pageable pageable) {
+        return musicalRepository.findAll(pageable);
     }
 
     public Musical findMusicalById(Long musicalId) {
