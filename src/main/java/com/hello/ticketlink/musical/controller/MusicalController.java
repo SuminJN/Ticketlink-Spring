@@ -28,7 +28,7 @@ public class MusicalController {
     public String getAllMusicals(@PageableDefault(size = 5, sort = "id") Pageable pageable, Model model) {
         Page<Musical> musicals = musicalService.findAllMusicals(pageable);
         model.addAttribute("musicals", musicals);
-        return "list";
+        return "musical_list";
     }
 
     @GetMapping("/{musicalId}") // 뮤지컬 상세 페이지
@@ -37,12 +37,12 @@ public class MusicalController {
         int[] seats = musical.availableTicket();
         model.addAttribute("seats", seats);
         model.addAttribute("musical", musical);
-        return "musical";
+        return "musical_detail";
     }
 
     @GetMapping("/add") // 뮤지컬 추가 페이지
     public String addForm() {
-        return "add";
+        return "add_musical";
     }
 
     @PostMapping("/add") // 뮤지컬 추가 요청
@@ -60,7 +60,7 @@ public class MusicalController {
     public String editForm(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
         model.addAttribute("musical", musical);
-        return "edit";
+        return "edit_musical";
     }
 
     @PostMapping("/{musicalId}/edit") // 뮤지컬 수정 요청

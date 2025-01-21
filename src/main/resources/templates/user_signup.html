@@ -16,7 +16,7 @@
             <h4>회원가입</h4>
         </div>
     </div>
-    <form action="signup_form.html" th:action method="post" th:object="${userCreateRequestDto}">
+    <form action="user_signup.html" th:action method="post" th:object="${userCreateRequestDto}">
         <div th:replace="~{form_errors :: formErrorsFragment}"></div>
 
         <div class="mb-3">

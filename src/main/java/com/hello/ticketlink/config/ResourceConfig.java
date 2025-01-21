@@ -8,7 +8,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 
 @Configuration
-public class ResourceConfiguration implements WebMvcConfigurer {
+public class ResourceConfig implements WebMvcConfigurer {
 
     private String connectPath = "/uploadPath/**";
     final Path FILE_ROOT = Paths.get("./").toAbsolutePath().normalize();    // resources 폴더가 아닌 위치 일때 , 현재 위치를 지정함

@@ -29,7 +29,7 @@
       </thead>
       <tbody>
       <tr th:each="ticket: ${tickets}">
-        <td><a href="musical.html" th:href="@{|/musicals/${ticket.musical.id}|}"
+        <td><a href="musical_detail.html" th:href="@{|/musicals/${ticket.musical.id}|}"
                th:text="${ticket.musical.title}">뮤지컬 제목</a></td>
         <td th:text="${ticket.seatNumber}">자리 번호</td>
         <td th:text="${ticket.musical.runningTime}">러닝타임</td>

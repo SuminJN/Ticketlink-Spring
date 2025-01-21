@@ -25,23 +25,23 @@ public class UserController {
 
     @GetMapping("/login")
     public String login() {
-        return "login_form";
+        return "user_login";
     }
 
     @GetMapping("/signup")
     public String signup(UserCreateRequestDto userCreateRequestDto) {
-        return "signup_form";
+        return "user_signup";
     }
 
     @PostMapping("/signup")
     public String signup(@ModelAttribute @Valid UserCreateRequestDto userCreateRequestDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
-            return "signup_form";
+            return "user_signup";
         }
 
         if (!userCreateRequestDto.getPassword1().equals(userCreateRequestDto.getPassword2())) {
             bindingResult.rejectValue("password2", "passwordInCorrect", "2개의 패스워드가 일치하지 않습니다.");
-            return "signup_form";
+            return "user_signup";
         }
 
         userService.create(userCreateRequestDto.getUsername(),
@@ -55,6 +55,6 @@ public class UserController {
         User user = userService.getUser(principal.getName());
         model.addAttribute("user", user.userInfoResponse());
 
-        return "user";
+        return "user_detail";
     }
 }

@@ -73,9 +73,9 @@
             </thead>
             <tbody>
             <tr th:each="musical: ${musicals}">
-                <td><a href="musical.html" th:href="@{/musicals/{itemId}(itemId=${musical.id})}"
+                <td><a href="musical_detail.html" th:href="@{/musicals/{itemId}(itemId=${musical.id})}"
                        th:text="${musical.id}">id</a></td>
-                <td><a href="musical.html" th:href="@{|/musicals/${musical.id}|}"
+                <td><a href="musical_detail.html" th:href="@{|/musicals/${musical.id}|}"
                        th:text="${musical.title}">제목</a></td>
                 <td th:text="${musical.genre}">장르</td>
                 <td th:text="${musical.description}">설명</td>
