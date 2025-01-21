@@ -40,7 +40,7 @@ public class MusicalController {
         model.addAttribute("musical", musical);
         return "musical";
     }
-    
+
     @GetMapping("/add") // 뮤지컬 추가 페이지
     public String addForm() {
         return "add";
@@ -56,7 +56,7 @@ public class MusicalController {
         redirectAttributes.addAttribute("musicalId", musicalId);
         return "redirect:/musicals/{musicalId}";
     }
-    
+
     @GetMapping("/{musicalId}/edit") // 뮤지컬 수정 페이지
     public String editForm(@PathVariable Long musicalId, Model model) {
         Musical musical = musicalService.findMusicalById(musicalId);
@@ -65,11 +65,16 @@ public class MusicalController {
     }
 
     @PostMapping("/{musicalId}/edit") // 뮤지컬 수정 요청
-    public String editMusical(@PathVariable Long musicalId, @ModelAttribute MusicalUpdateRequestDto requestDTO) {
+    public String editMusical(@PathVariable Long musicalId,
+                              @ModelAttribute MusicalUpdateRequestDto requestDTO,
+                              @RequestParam MultipartFile image) {
         musicalService.updateMusical(musicalId, requestDTO);
+
+        if(!image.isEmpty()) musicalService.updatePoster(musicalId, image);
+
         return "redirect:/musicals/{musicalId}";
     }
-    
+
     @GetMapping("/{musicalId}/delete") // 뮤지컬 삭제 요청
     public String deleteMusical(@PathVariable Long musicalId) {
         musicalService.deleteMusical(musicalId);

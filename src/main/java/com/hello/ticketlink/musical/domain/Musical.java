@@ -91,6 +91,10 @@ public class Musical {
         this.runningTime = runningTime;
     }
 
+    public void updatePoster(Poster poster) {
+        this.poster = poster;
+    }
+
     public List<Integer> availableTicket() {
         Set<Integer> bookedTicketNumbers = tickets.stream()
                 .map(Ticket::getSeatNumber)

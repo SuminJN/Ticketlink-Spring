@@ -15,7 +15,7 @@
         <h2>뮤지컬 수정 페이지</h2>
     </div>
 
-    <form action="musical.html" th:action method="post">
+    <form action="musical.html" th:action method="post" enctype="multipart/form-data">
         <div class="row">
             <div class="col-9"></div>
             <div class="col-1 p-0">
@@ -37,7 +37,7 @@
         <hr class="mb-4 mt-2">
 
         <div class="row">
-            <img class="col-4" src="../static/images/test.jpg" style="border: 3px solid"/>
+            <img class="col-4" src="../static/images/test.jpg" th:src="@{'/uploadPath' + ${musical.poster.imagePath}}" style="border: 3px solid"/>
             <div class="col-1"></div>
             <div class="col-7">
 
@@ -72,7 +72,10 @@
                            th:value="${musical.runningTime}">
                 </div>
 
-
+                <div class="mb-4">
+                    <label for="image">공연 포스터 수정</label>
+                    <input type="file" id="image" name="image" class="form-control" accept="image/*">
+                </div>
             </div>
         </div>
     </form>

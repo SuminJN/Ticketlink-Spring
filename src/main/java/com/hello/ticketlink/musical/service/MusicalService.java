@@ -72,6 +72,14 @@ public class MusicalService {
     }
 
     @Transactional
+    public void updatePoster(Long musicalId, MultipartFile image) {
+        Poster poster = posterService.uploadThumbnail(image);
+        Musical musical = musicalRepository.findById(musicalId)
+                .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
+        musical.updatePoster(poster);
+    }
+
+    @Transactional
     public void deleteMusical(Long musicalId) {
         Musical musical = musicalRepository.findById(musicalId)
                 .orElseThrow(() -> new EntityNotFoundException("존재하지 않는 뮤지컬입니다."));
